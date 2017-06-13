@@ -1,8 +1,15 @@
-var db = require('../db');
-
+var db = require('../db/index');
+// console.log('db', db);
 module.exports = {
   messages: {
-    get: function () {}, // a function which produces all the messages
+    get: function () {
+      db.dbConnection.query('select * from messages', function (err, result) {
+        if (err) throw err;
+        console.log("Result: " + result);
+        return result;
+      });
+      // db.dbConnection.end();
+    }, // a function which produces all the messages
     post: function () {} // a function which can be used to insert a message into the database
   },
 
@@ -12,4 +19,12 @@ module.exports = {
     post: function () {}
   }
 };
-
+//
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+//   con.query(sql, function (err, result) {
+//     if (err) throw err;
+//     console.log("Result: " + result);
+//   });
+// });
