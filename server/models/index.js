@@ -10,13 +10,34 @@ module.exports = {
       });
       // db.dbConnection.end();
     }, // a function which produces all the messages
-    post: function () {} // a function which can be used to insert a message into the database
+    post: function (data) {
+      db.dbConnection.query('INSERT INTO `messages` (text) values (?)', [data.text], function(err, result) {
+        if (err) throw err;
+        // console.log("inserted in the DB", result);
+      })
+      // db.dbConnection.end();
+    } // a function which can be used to insert a message into the database
   },
 
   users: {
     // Ditto as above.
-    get: function () {},
-    post: function () {}
+    get: function () {
+      db.dbConnection.query('select * from users', function (err, result) {
+        if (err) throw err;
+        console.log("users " + result);
+        return result;
+      });
+        // db.dbConnection.end();
+    },
+    post: function (data) {
+      console.log('data.username', data.username);
+      db.dbConnection.query('INSERT INTO `users` (name) values (?)', [data.username], function(err, result) {
+        if (err) throw err;
+        console.log("inserted users in the DB", result);
+      })
+      // db.dbConnection.end();
+    } // a
+
   }
 };
 //
